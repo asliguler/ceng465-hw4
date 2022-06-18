@@ -11,27 +11,23 @@ def mainFunc(fileName):
     findKCores(networkDict)
 
 
-def findKCores(networkDict):
+def findKCores(networkDict : dict):
     k = 1
     while k > 0:
-        allConnectivityFlag = True
-        totalEdges = 0
+        numberOfEdges = 0
         for key in list(networkDict.keys()):
             if len(networkDict[key]) < k:
-                allConnectivityFlag = False
                 for item in networkDict[key]:
                     networkDict[item].remove(key)
                 networkDict.pop(key)
-            else:
-                if all(x in networkDict[key] for x in networkDict.keys()):
-                    allConnectivityFlag = False
-                totalEdges = totalEdges + len(networkDict[key])
-        if totalEdges == 0:
-            print(f"For k = {k} there are {totalEdges} proteins.")
+        for key in networkDict.keys():
+            numberOfEdges = numberOfEdges + len(networkDict[key])
+        if numberOfEdges == 0:
             k = -1
         else:
-            print(f"For k = {k} there are {totalEdges} proteins.")
+            print(f"For k = {k} there are {numberOfEdges} proteins.")
             k = k + 1
+
 
 
 def parseTxtNetwork(fileName, networkDict):
